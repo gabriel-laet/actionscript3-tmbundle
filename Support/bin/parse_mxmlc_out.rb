@@ -20,11 +20,10 @@ ERROR_WARN_MATCH = "error_warn_match"
 RECOMPILE_REASON_MATCH = "recompile_reason_match"
 
 last_match = ""
-
+             
 ARGF.each do |line|
-
     match = error_and_warn_regex.match( line )
-    
+
     begin
         
         unless match === nil

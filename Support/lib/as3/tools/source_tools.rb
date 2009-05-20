@@ -2,7 +2,9 @@
 
 # ActionScript 3 utility methods for inspecting source directories, paths and
 # packages.
-#
+#          
+require "#{ENV['TM_BUNDLE_SUPPORT']}/bin/as3project"
+
 module SourceTools
 	
 	# Returns an colon seperated list of directory names 
@@ -10,11 +12,10 @@ module SourceTools
 	#
 	# See 'Settings' bundle preference to override defaults.
 	#
-	def self.common_src_dir_list
-		src_dirs = ENV['TM_AS3_USUAL_SRC_DIRS']
-		src_dirs = "src:lib:source:test" if src_dirs == nil
+  def self.common_src_dir_list
+		src_dirs = AS3Project.source_path_list().push(File.basename(ENV["TM_PROJECT_DIRECTORY"])).join(":")
 		src_dirs
-	end
+   end
 
 	# Returns an array of directory names that are commonly used
 	# as the root directory for source files.
@@ -22,7 +23,7 @@ module SourceTools
 	def self.common_src_dirs
 		src_dirs_matches = common_src_dir_list.split(":")
 		src_dirs_matches
-	end
+	end         
 
 	# Loads all paths found within the current project that have a filename which
 	# contains the requested word.

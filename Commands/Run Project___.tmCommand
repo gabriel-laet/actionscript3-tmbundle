@@ -5,28 +5,9 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>. "$TM_BUNDLE_SUPPORT/lib/flex_utils.sh"
+	<string>  
+"$TM_BUNDLE_SUPPORT/bin/as3project.rb" -run
 
-cd_to_tmproj_root;
-
-TM_FLEX_RUN_FILE=${TM_FLEX_RUN_FILE:=build/launch.sh}
-
-# Look for a custom 'run' script.
-if [[ (-f "$TM_PROJECT_DIR/$TM_FLEX_RUN_FILE") ]]; then
-	"$TM_PROJECT_DIR/$TM_FLEX_RUN_FILE";
-	exit $?
-else
-	open "deploy/index.html";
-	
-	#Or you could use...
-	#open -a Safari "deploy/index.html";
-	#open -a Firefox "deploy/index.html";
-	#open "$TM_FLEX_OUTPUT"
-	#open -a SAFlashPlayerDbgRel_en "$TM_FLEX_OUTPUT"
-	#open -a SAFlashPlayer "$TM_FLEX_OUTPUT"
-fi
-
-exit 0;
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -35,9 +16,9 @@ exit 0;
 	<key>name</key>
 	<string>Run</string>
 	<key>output</key>
-	<string>discard</string>
+	<string>ignore</string>
 	<key>scope</key>
-	<string>source.actionscript.3, text.xml.mxml, text.xml</string>
+	<string>source.actionscript.3, text.xml.mxml, text.xml, source.yaml</string>
 	<key>uuid</key>
 	<string>72E85582-E1CC-4142-94DC-51566510D868</string>
 </dict>

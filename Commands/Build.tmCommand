@@ -12,44 +12,22 @@
 
 # the relevant support scripts
 DAEMON="$TM_BUNDLE_SUPPORT/bin/fcshd.rb"
-SERVER="$TM_BUNDLE_SUPPORT/bin/fcshd.py"
-OUTPUT_PARSER="$TM_BUNDLE_SUPPORT/bin/parse_mxmlc_out.rb"
+BUILD="$TM_BUNDLE_SUPPORT/bin/as3project.rb"
 
 # Define $TM_PROJECT_DIR or warn the user if they're not working with a TM Project. 
 cd_to_tmproj_root
 
-# construct a compilation command based on our project settings
-AS_FILE=$TM_PROJECT_DIRECTORY/$TM_FLEX_FILE_SPECS
-SWF_FILE=$TM_PROJECT_DIRECTORY/$TM_FLEX_OUTPUT
-MXMLC_CMD="mxmlc -o=$SWF_FILE -file-specs=$AS_FILE"
-
 # make sure we have the files + paths needed for compilation
 try_to_add_flex_bin_to_PATH
-require_file "TM_FLEX_FILE_SPECS" "$AS_FILE"
-require_var "TM_FLEX_OUTPUT" "$TM_FLEX_OUTPUT"
 
 # print the header to the output window
 "$DAEMON" -view
 
 # run the compiler and print filtered error messages
-"$DAEMON" -start &gt; /dev/null
-"$SERVER" "$MXMLC_CMD" 2&gt;&amp;1 | "$OUTPUT_PARSER"
+"$DAEMON" -start &gt; /dev/null                          
+"$BUILD" -compile
 
-#echo ${PIPESTATUS[0]}
 
-# launch on success and update the header in the output window
-if [ ${PIPESTATUS[0]} -eq 0 ]; then
-	if [[ (-f "$TM_PROJECT_DIR/build/launch.sh") ]]; then
-		"$TM_PROJECT_DIR/build/launch.sh";
-	else
-		#killall Flash\ Player 2&gt; /dev/null
-		#open -a Flash\ Player "$SWF_FILE"
-		echo "Opening"
-	fi
-	"$DAEMON" -success
-else
-	"$DAEMON" -fail
-fi
 </string>
 	<key>input</key>
 	<string>none</string>
@@ -60,7 +38,7 @@ fi
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>scope</key>
-	<string>source.actionscript.3, text.xml.mxml, text.xml.flex-config, comment.block.documentation.asdoc</string>
+	<string>source.actionscript.3, text.xml.mxml, text.xml.flex-config, comment.block.documentation.asdoc, source.yaml</string>
 	<key>uuid</key>
 	<string>1117FC54-44F6-4A33-9C39-7E3F18C86563</string>
 </dict>
