@@ -68,7 +68,7 @@ module AS3Project
     end                          
     
     def self.mxmlc_default_extra
-        build_file.fetch("default")[0].fetch("debug") rescue ""
+        build_file.fetch("default")[0].fetch("extra") rescue ""
     end
     
     def self.mxmlc_default_debug                             
