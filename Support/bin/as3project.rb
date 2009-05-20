@@ -46,25 +46,29 @@ module AS3Project
     end
                                           
     def self.libray_path_list
-        get_path_list("source-path")
+        get_path_list("library-path")
     end
     
     def self.mxmlc_source_path
         paths = source_path_list
+        source_path = []
+        
         paths.each do |path|
-            path = "-sp+="+File.join(@project, path)
+            source_path.push "-sp+="+File.join(@project, path)
         end                                 
         
-        paths.join(" ")
+        source_path.join(" ")
     end       
     
     def self.mxmlc_library_path
         paths = libray_path_list
+        library_path = []
+        
         paths.each do |path|
-            path = "-library-path+="+File.join(@project, path)
+            library_path.push "-library-path+="+File.join(@project, path)
         end                                 
         
-        paths.join(" ")
+        library_path.join(" ")
     end                          
     
     def self.mxmlc_default_extra
@@ -89,8 +93,10 @@ module AS3Project
                     extra = app.fetch("extra") rescue mxmlc_default_extra
                     klass = File.join(@project, app.fetch("class"))
                     output = File.join(@project, app.fetch("output"))
+                    library_path = mxmlc_library_path rescue ""
+                    source_path = mxmlc_source_path rescue ""
                     
-                    apps.push({"klass"=>app.fetch("class"), "mxmlc"=>"mxmlc #{klass} -o=#{output} -debug=#{debug} #{extra}"})
+                    apps.push({"klass"=>app.fetch("class"), "mxmlc"=>"mxmlc #{klass} -o=#{output} -debug=#{debug} #{library_path} #{source_path} #{extra}"})
                 end
             end
         end 
