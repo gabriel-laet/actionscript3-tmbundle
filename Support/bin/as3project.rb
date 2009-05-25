@@ -43,7 +43,21 @@ module AS3Project
         end
         
         dirs
-    end             
+    end     
+    
+    def self.definitions(paths)
+      classes = {}
+      paths.each do |path|
+        source_path = Pathname.new(File.join(@project,path))
+        Find.find(source_path.to_s) do |f|
+          if f =~ /.as$/
+            clean_path = Pathname.new(f).relative_path_from(source_path).to_s
+            classes[f.to_s] = clean_path.gsub("/", ".").gsub(".as", "")
+          end
+        end
+      end
+      classes
+    end 
                 
     def self.source_path_list
         get_path_list("source-path")
@@ -100,7 +114,16 @@ module AS3Project
                     library_path = mxmlc_library_path rescue ""
                     source_path = mxmlc_source_path rescue ""
                     
-                    apps.push({"klass"=>app.fetch("class"), "mxmlc"=>"mxmlc #{klass} -o=#{output} -debug=#{debug} #{library_path} #{source_path} #{extra}"})
+                    app_obj = {"klass"=>app.fetch("class")}
+                    if output =~ /.swc$/
+                      require 'pathname'
+                      require 'find'
+                      app_obj["mxmlc"] = "compc -include-classes=#{definitions(source_path_list)[klass]} -o=#{output} #{library_path} #{source_path} #{extra}"
+                    else
+                      app_obj["mxmlc"] = "mxmlc #{klass} -o=#{output} -debug=#{debug} #{library_path} #{source_path} #{extra}"
+                    end
+                    
+                    apps.push(app_obj)
                 end
             end
         end 
@@ -125,15 +148,9 @@ module AS3Project
     
     def self.asdocs_exclude_classes()
       to_exclude = []
-      
-      asdocs_exclude_dirs.each do |path|
-        source_path = Pathname.new(File.join(@project,path))
-        Find.find(source_path.to_s) do |f|
-          if f =~ /.as$/
-            clean_path = Pathname.new(f).relative_path_from(source_path).to_s
-            to_exclude.push("-exclude-classes+="+clean_path.gsub("/", ".").gsub(".as", ""))
-          end
-        end
+
+      definitions(asdocs_exclude_dirs).each do |path|
+        to_exclude.push("-exclude-classes+="+path[1])
       end
       
       to_exclude.join(" ")
@@ -157,12 +174,12 @@ module AS3Project
       require 'pathname'
       
       if build_file.has_key?("asdoc")
-        print("Running asdoc...<br /><br /><pre>")
-        system("#{ENV["TM_FLEX_PATH"]}/bin/asdoc -output #{asdocs_output} #{asdocs_source_path} #{mxmlc_library_path} #{mxmlc_source_path} #{asdocs_exclude_classes} -warnings=false -window-title '#{asdocs_title}' -main-title '#{asdocs_title}' -footer '#{asdocs_footer}'")
-        print "</pre>"
-      else
-        print "You have to set ASDocs settings on YAML file"
-      end  
+         print("Running asdoc...<br /><br /><pre>")
+         system("#{ENV["TM_FLEX_PATH"]}/bin/asdoc -output #{asdocs_output} #{asdocs_source_path} #{mxmlc_library_path} #{mxmlc_source_path} #{asdocs_exclude_classes} -warnings=false -window-title '#{asdocs_title}' -main-title '#{asdocs_title}' -footer '#{asdocs_footer}'")
+         print "</pre>"
+       else
+         print "You have to set ASDocs settings on YAML file"
+       end  
     end
     
     def self.compile()                                       
