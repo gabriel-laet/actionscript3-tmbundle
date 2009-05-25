@@ -45,18 +45,24 @@ module AS3Project
         dirs
     end     
     
-    def self.definitions(paths)
-      classes = {}
-      paths.each do |path|
+    def self.definitions(paths, relative_path_from=nil)
+        classes = {}
+        paths.each do |path|
         source_path = Pathname.new(File.join(@project,path))
+          
         Find.find(source_path.to_s) do |f|
-          if f =~ /.as$/
-            clean_path = Pathname.new(f).relative_path_from(source_path).to_s
-            classes[f.to_s] = clean_path.gsub("/", ".").gsub(".as", "")
+            if f =~ /.as$/
+              if !relative_path_from
+                clean_path = Pathname.new(f).relative_path_from(source_path).to_s
+              else
+                clean_path = Pathname.new(f).relative_path_from(Pathname.new(File.join(@project, relative_path_from))).to_s
+              end
+              
+              classes[f.to_s] = clean_path.gsub("/", ".").gsub(".as", "")
+            end
           end
         end
-      end
-      classes
+        classes
     end 
                 
     def self.source_path_list
@@ -149,7 +155,7 @@ module AS3Project
     def self.asdocs_exclude_classes()
       to_exclude = []
 
-      definitions(asdocs_exclude_dirs).each do |path|
+      definitions(asdocs_exclude_dirs, source_path_list).each do |path|
         to_exclude.push("-exclude-classes+="+path[1])
       end
       
