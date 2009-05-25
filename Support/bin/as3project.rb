@@ -23,7 +23,11 @@ module AS3Project
                 exit
             end
 
-            @build_yaml = YAML::load(file)    
+            @build_yaml = YAML::load(file) rescue nil
+            if !@build_yaml
+              print "Something wrong when parsing YAML file"
+              exit
+            end    
         end        
         
         @build_yaml
@@ -104,6 +108,63 @@ module AS3Project
         apps
     end
     
+    def self.asdocs_source_path()
+        paths = build_file.fetch("asdoc").fetch("source-path") rescue []
+        source_path = []
+        
+        paths.each do |path|
+            source_path.push "-doc-sources+="+File.join(@project, path)
+        end                                 
+        
+        source_path.join(" ")
+    end
+    
+    def self.asdocs_exclude_dirs()
+      build_file.fetch("asdoc").fetch("exclude-dirs") rescue []
+    end
+    
+    def self.asdocs_exclude_classes()
+      to_exclude = []
+      
+      asdocs_exclude_dirs.each do |path|
+        source_path = Pathname.new(File.join(@project,path))
+        Find.find(source_path.to_s) do |f|
+          if f =~ /.as$/
+            clean_path = Pathname.new(f).relative_path_from(source_path).to_s
+            to_exclude.push("-exclude-classes+="+clean_path.gsub("/", ".").gsub(".as", ""))
+          end
+        end
+      end
+      
+      to_exclude.join(" ")
+    end
+    
+    def self.asdocs_title()
+      build_file.fetch("asdoc").fetch("title") rescue "ActionScript Project"
+    end
+        
+    def self.asdocs_footer()
+      build_file.fetch("asdoc").fetch("footer") rescue "ActionScript Project"
+    end
+    
+    def self.asdocs_output()
+      File.join(@project, build_file.fetch("asdoc").fetch("output")) rescue ""
+    end
+    
+    def self.asdocs()   
+      
+      require 'find'
+      require 'pathname'
+      
+      if build_file.has_key?("asdoc")
+        print("Running asdoc...<br /><br /><pre>")
+        system("#{ENV["TM_FLEX_PATH"]}/bin/asdoc -output #{asdocs_output} #{asdocs_source_path} #{mxmlc_library_path} #{mxmlc_source_path} #{asdocs_exclude_classes} -warnings=false -window-title '#{asdocs_title}' -main-title '#{asdocs_title}' -footer '#{asdocs_footer}'")
+        print "</pre>"
+      else
+        print "You have to set ASDocs settings on YAML file"
+      end  
+    end
+    
     def self.compile()                                       
         mxmlc_applications.each do |app|
             printf('<b>Compiling %s</b>', app["klass"])
@@ -133,6 +194,7 @@ def run
     if !ARGV.empty?
         AS3Project.compile() if ARGV[0] == "-compile"
         AS3Project.run() if ARGV[0] == "-run"
+        AS3Project.asdocs() if ARGV[0] == "-docs"
     end
         
 end

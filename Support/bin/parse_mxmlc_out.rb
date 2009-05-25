@@ -9,6 +9,7 @@
 STDOUT.sync = true
 
 error_count = 0;
+daemon_error_regex = /(^XML-RPC Error)(.*)$/
 error_and_warn_regex = /(\/.*?)(\(([0-9]+)\)|):.*(Error|Warning):\s*(.*)$/
 config_file_regex = /(^Loading configuration file )(.*)$/
 recompile_file_regex = /(^Recompile: )(.*)$/
@@ -22,10 +23,17 @@ RECOMPILE_REASON_MATCH = "recompile_reason_match"
 last_match = ""
              
 ARGF.each do |line|
-    match = error_and_warn_regex.match( line )
+    match = daemon_error_regex.match( line )
 
     begin
+        unless match === nil
+          print "<br/><b>Daemon is not working. Please check TM_FLEX_PATH.</b>"
+          print "<br/>Server message: "+line
+          exit
+        end
         
+        
+        match = error_and_warn_regex.match( line )
         unless match === nil
             print "<br/>" if last_match != ERROR_WARN_MATCH        
             print 'Error <a title="Click to show error." href="txmt://open?url=file://' + match[1] + 
