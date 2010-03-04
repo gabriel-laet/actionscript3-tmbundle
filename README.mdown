@@ -24,42 +24,18 @@ Source can be viewed or forked via GitHub: [http://github.com/lucasdupin/actions
 How-To
 -----------
 
-1) Go to TextMate preferences > Advanced > Shell Variables and add TM_FLEX_PATH with your Flex SDK path (/Users/gabriellaet/code/flex_sdk_3/)
-2) Make sure you have Python 2.5 and OSX 10.5.5+;
-3) Create a TextMate project and add a build.yaml file like that:
+* Go to TextMate preferences > Advanced > Shell Variables and add TM_FLEX_PATH with your Flex SDK path (/Users/gabriellaet/code/flex_sdk_3/)
+* Make sure you have Python 2.5 and OSX 10.5.5+;
+* Create a TextMate project and add a build.yaml file like that:
 
----
-default:
-    - debug: false
-      open: public/myapp.swf
-      
-applications:
-    - class: source/classes/Main.as
-      output: public/myapp.swf
+<script src="http://gist.github.com/321795.js"></script>
 
-    # - class: source/classes/MyOtherApp.as
-    #   output: public/MyOtherApp.swf
-    
-source-path:
-    - source/classes
-                                                    
-library-path:
-    - source/swc
-
-
-# asdoc:
-#     - title: "My ActionScript project"
-#       footer: "My ActionScript project footer"
-#       output: /path/to/docs/
-#       exclude-dirs: 
-#         - source/classes/caurina/
-#
-
-
-4) Command + B to build;
-5) Command + R to launch;
-6) Command + D to generate ASDocs;
-7) If you want to change the path of your build.yaml, create a project variable called TM_FLEX_BUILD with the path you want;
+* Command + B to build;
+* Command + Option + B to build and run;
+* Command + R to run;
+* Command + K to generate ASDocs;
+* Command + D to debug;
+* If you want to change the path of your build.yaml, create a project variable called TM_FLEX_BUILD with the path you want;
 
 
 Conventions
@@ -82,15 +58,18 @@ Maintainer
 Credits
 ----------
 
-[Gabriel Laet](http://gabriellaet.com) - fcshd branch
-http://github.com/gabriel-laet/actionscript3-tmbundle/
+[Gabriel Laet](http://gabriellaet.com)
+http://github.com/gabriel-laet/actionscript3-tmbundle/ (fcshd branch)
 
-[Lucas Dupin](http://lucasdup.in) - fcshd branch
-http://github.com/lucasdupin/actionscript3-tmbundle/
+[Lucas Dupin](http://lucasdup.in) 
+http://github.com/lucasdupin/actionscript3-tmbundle/ (fcshd branch)
+http://github.com/lucasdupin/as3BundleHelper (debugger)
+
+[Christian Swinehart]
+http://github.com/simongregory/actionscript3-tmbundle/ (fcshd branch)
 
 [Leo Soto](http://code.google.com/p/flex-compiler-shell-daemon/)
-
-[Christian Swinehart](http://github.com/simongregory/actionscript3-tmbundle/tree/fcshd)
+(fcshd daemon)
 
 License
 -------
