@@ -16,10 +16,51 @@ Installation
 To install via Git:
 
 		cd ~/"Library/Application Support/TextMate/Bundles/"
-		git clone git://github.com/simongregory/actionscript3-tmbundle.git "ActionScript 3.tmbundle"
+		git clone git://github.com/gabriel-laet/actionscript3-tmbundle.git "ActionScript 3.tmbundle"
 		osascript -e 'tell app "TextMate" to reload bundles'
 
 Source can be viewed or forked via GitHub: [http://github.com/lucasdupin/actionscript3-tmbundle/tree/master](http://github.com/lucasdupin/actionscript3-tmbundle/tree/fcsh)
+
+How-To
+-----------
+
+1) Go to TextMate preferences > Advanced > Shell Variables and add TM_FLEX_PATH with your Flex SDK path (/Users/gabriellaet/code/flex_sdk_3/)
+2) Make sure you have Python 2.5 and OSX 10.5.5+;
+3) Create a TextMate project and add a build.yaml file like that:
+
+---
+default:
+    - debug: false
+      open: public/myapp.swf
+      
+applications:
+    - class: source/classes/Main.as
+      output: public/myapp.swf
+
+    # - class: source/classes/MyOtherApp.as
+    #   output: public/MyOtherApp.swf
+    
+source-path:
+    - source/classes
+                                                    
+library-path:
+    - source/swc
+
+
+# asdoc:
+#     - title: "My ActionScript project"
+#       footer: "My ActionScript project footer"
+#       output: /path/to/docs/
+#       exclude-dirs: 
+#         - source/classes/caurina/
+#
+
+
+4) Command + B to build;
+5) Command + R to launch;
+6) Command + D to generate ASDocs;
+7) If you want to change the path of your build.yaml, create a project variable called TM_FLEX_BUILD with the path you want;
+
 
 Conventions
 -----------
@@ -36,10 +77,20 @@ Please use the TextMate Users mailing list [http://lists.macromates.com/listinfo
 Maintainer
 ----------
 
-[Lucas Dupin](http://lucasdup.in)
+[Simon Gregory](http://blog.simonregory.com) - master http://github.com/simongregory/actionscript3-tmbundle/
+
+Credits
+----------
+
+[Gabriel Laet](http://gabriellaet.com) - fcshd branch
+http://github.com/gabriel-laet/actionscript3-tmbundle/
+
+[Lucas Dupin](http://lucasdup.in) - fcshd branch
 http://github.com/lucasdupin/actionscript3-tmbundle/
 
-[Simon Gregory](http://blog.simonregory.com) - master http://github.com/simongregory/actionscript3-tmbundle/
+[Leo Soto](http://code.google.com/p/flex-compiler-shell-daemon/)
+
+[Christian Swinehart](http://github.com/simongregory/actionscript3-tmbundle/tree/fcshd)
 
 License
 -------
