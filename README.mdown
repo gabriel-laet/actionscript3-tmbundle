@@ -19,7 +19,7 @@ To install via Git:
 		git clone git://github.com/gabriel-laet/actionscript3-tmbundle.git "ActionScript 3.tmbundle"
 		osascript -e 'tell app "TextMate" to reload bundles'
 
-Source can be viewed or forked via GitHub: [http://github.com/lucasdupin/actionscript3-tmbundle/tree/master](http://github.com/lucasdupin/actionscript3-tmbundle/tree/fcsh)
+Source can be viewed or forked via GitHub: [http://github.com/gabriel-lat/actionscript3-tmbundle/tree/master](http://github.com/gabriel-laet/actionscript3-tmbundle/tree/fcsh)
 
 How-To
 -----------
@@ -84,7 +84,7 @@ Maintainer
 Credits
 ----------
 
-[Gabriel Laet](http://gabriellaet.com) http://github.com/gabriel-laet/actionscript3-tmbundle/ (fcshd branch)
+[Gabriel Laet](http://gabriellaet.com) http://github.com/gabriel-laet/actionscript3-tmbundle/ (fcshd branch and build engine)
 
 [Lucas Dupin](http://lucasdup.in) http://github.com/lucasdupin/ (fcshd branch and debugger)
 
