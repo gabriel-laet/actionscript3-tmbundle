@@ -54,7 +54,8 @@ How-To
 		#       exclude-dirs: 
 		#         - source/classes/caurina/
 		#
-
+		
+		
 * Command + B to build;
 * Command + Option + B to build and run;
 * Command + R to run;
@@ -84,8 +85,11 @@ Credits
 ----------
 
 [Gabriel Laet](http://gabriellaet.com) http://github.com/gabriel-laet/actionscript3-tmbundle/ (fcshd branch)
+
 [Lucas Dupin](http://lucasdup.in) http://github.com/lucasdupin/ (fcshd branch and debugger)
+
 Christian Swinehart http://github.com/simongregory/actionscript3-tmbundle/ (fcshd branch)
+
 [Leo Soto](http://code.google.com/p/flex-compiler-shell-daemon/) (fcshd daemon)
 
 License
