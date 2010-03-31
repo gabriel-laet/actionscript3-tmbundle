@@ -7,22 +7,19 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby -wKU
 
-require ENV['TM_BUNDLE_SUPPORT']+'/lib/flex_env'
+require ENV['TM_BUNDLE_SUPPORT']+'/lib/add_lib'
+require 'as3/source_tools'
 
 dir = ENV['TM_DIRECTORY']
 path = dir ? dir : ""
-
-SourceTools.common_src_dirs.each do |remove|
-    path = path.gsub( /^.*\b#{remove}\b(\/|$)/, "" );
-end
-
+path = SourceTools.truncate_to_src(path)
 path = path.gsub( "/", ".")
 
 path = " "+ path if path != ""
 
 print "package${1:#{path}}
 {	
-\$2
+\$0
 }"
 
 

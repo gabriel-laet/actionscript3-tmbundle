@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveModifiedFiles</string>
+	<key>bundleUUID</key>
+	<string>847E3C93-A096-4C8E-9EDA-3D313E4F0014</string>
+	<key>command</key>
+	<string>#build and run? NO
+export TM_BUILD_AND_RUN=1
+
+build.rb</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@b</string>
+	<key>name</key>
+	<string>Build and Run</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.actionscript.3, text.xml.mxml, text.xml.flex-config, comment.block.documentation.asdoc, source.yaml</string>
+	<key>uuid</key>
+	<string>8DD6F776-94D1-4EAF-A0D2-19AB4BEA35C4</string>
+</dict>
+</plist>

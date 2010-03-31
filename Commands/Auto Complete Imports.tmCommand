@@ -7,20 +7,9 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby -wKU
 
-require ENV['TM_BUNDLE_SUPPORT']+'/lib/flex_env'
+require ENV['TM_BUNDLE_SUPPORT']+'/lib/c_env'
 
-scope  = ENV['TM_SCOPE']
-line   = ENV['TM_CURRENT_LINE']
-word   = STDIN.read.strip
-cp     = SourceTools.find_package(word)
-
-if scope =~ /asdoc/
-	cp = "@see #{cp}"
-else
-	cp = "import #{cp}" unless line =~ /^\s*import/
-end
-
-print "#{cp};"
+FlexMate.complete_import(STDIN.read.strip)
 
 
 </string>
@@ -33,7 +22,7 @@ print "#{cp};"
 	<key>name</key>
 	<string>Auto Complete Import</string>
 	<key>output</key>
-	<string>insertAsSnippet</string>
+	<string>replaceSelectedText</string>
 	<key>scope</key>
 	<string>source.actionscript.3 meta.package.actionscript.3, source.actionscript.3.embedded.mxml, comment.block.documentation.asdoc</string>
 	<key>uuid</key>

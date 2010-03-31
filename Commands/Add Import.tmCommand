@@ -7,7 +7,7 @@
 	<key>command</key>
 	<string>#!/usr/bin/env ruby -wKU
 
-require ENV['TM_BUNDLE_SUPPORT']+'/lib/flex_env'
+require ENV['TM_BUNDLE_SUPPORT']+'/lib/c_env'
 
 word   = ENV['TM_CURRENT_WORD']
 line   = ENV['TM_CURRENT_LINE']
@@ -21,7 +21,7 @@ line_idx = ENV['TM_LINE_INDEX']
 doc[line] = doc[line].gsub(word, cla)
 
 pkg = /^\s*package\b\s*([\w+\.]*)/
-cls = /^\s*(public|final)\s+(final|public)?\s*\bclass\b/
+cls = /^\s*(public|final)\s+(final|public)?\s*\b(class|interface)\b/
 mta = /^\s*\[(Style|Bindable|Event|Embed|SWF)/
 
 pre, imps, post = [], [], []
@@ -38,13 +38,13 @@ doc.split("\n").each do |line|
 	end
 end
 
-irgx = /^\s*import\s+#{import.gsub('.', '\.')}/
+irgx = /^\s*import\s+#{import.gsub('.', '\.')}(\s|;)/
 safe = 0
 indent = ""
 
 imps.each_with_index do |line,index|
-	if line =~ irgx		
-		TextMate.exit_insert_text(cla.sub(word,'')) if word != cla
+	if line =~ irgx	
+		TextMate.exit_insert_text(cla.sub(/#{word}/i,'')) if word != cla
 		TextMate.exit_show_tool_tip("#{word} already imported")
 	elsif line =~ /^(\s*)import\s+/
 		indent = $1

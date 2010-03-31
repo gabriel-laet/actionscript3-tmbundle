@@ -1,3 +1,4 @@
+
 TextMate ActionScript 3 Bundle
 ==============================
 
@@ -5,18 +6,12 @@ fcshd Branch
 ------------
 
 Experimental branch of 'master' concentrating on integrating a `fcsh` deamon process into the TextMate build command.
+Also include helpers for debugging and improvements for the language definition
 
 Christian Swinehart was originally responsible for getting this working, and the python server code originates from Leo Soto [http://code.google.com/p/flex-compiler-shell-daemon/](http://code.google.com/p/flex-compiler-shell-daemon/)
 
 Installation
 ------------
-
-To install via Subversion:
-
-		export LC_CTYPE=en_US.UTF-8
-		cd ~/"Library/Application Support/TextMate/Bundles/"
-		svn co http://svn.textmate.org/trunk/Review/Bundles/ActionScript\ 3.tmbundle
-		osascript -e 'tell app "TextMate" to reload bundles'
 
 To install via Git:
 
@@ -24,7 +19,7 @@ To install via Git:
 		git clone git://github.com/simongregory/actionscript3-tmbundle.git "ActionScript 3.tmbundle"
 		osascript -e 'tell app "TextMate" to reload bundles'
 
-Source can be viewed or forked via GitHub: [http://github.com/simongregory/actionscript3-tmbundle/tree/master](http://github.com/simongregory/actionscript3-tmbundle/tree/master)
+Source can be viewed or forked via GitHub: [http://github.com/lucasdupin/actionscript3-tmbundle/tree/master](http://github.com/lucasdupin/actionscript3-tmbundle/tree/fcsh)
 
 Conventions
 -----------
@@ -41,7 +36,10 @@ Please use the TextMate Users mailing list [http://lists.macromates.com/listinfo
 Maintainer
 ----------
 
-[Simon Gregory](http://blog.simonregory.com)
+[Lucas Dupin](http://lucasdup.in)
+http://github.com/lucasdupin/actionscript3-tmbundle/
+
+[Simon Gregory](http://blog.simonregory.com) - master http://github.com/simongregory/actionscript3-tmbundle/
 
 License
 -------

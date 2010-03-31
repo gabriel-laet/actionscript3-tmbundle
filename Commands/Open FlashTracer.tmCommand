@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/osascript
+tell application "as3Debugger"
+	activate
+end tell
+tell application "System Events"
+	keystroke "1" using command down
+end tell</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@d</string>
+	<key>name</key>
+	<string>Open Flash Log</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.actionscript, text.xml.mxml, text.xml.flex-config</string>
+	<key>uuid</key>
+	<string>B5CC1536-92EE-403E-BEE3-250D0105D834</string>
+</dict>
+</plist>

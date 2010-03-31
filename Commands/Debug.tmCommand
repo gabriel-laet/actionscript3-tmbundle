@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveModifiedFiles</string>
+	<key>command</key>
+	<string>#!/usr/bin/osascript
+tell application "as3Debugger"
+	activate
+
+	--Setting vars
+	set flex path to do shell script "echo $TM_FLEX_PATH"
+	set project path to do shell script "echo $TM_PROJECT_DIRECTORY"
+
+	--connecting to fdb
+	set connected to yes
+
+	
+	--running program
+	delay 4
+	do shell script "\"$TM_BUNDLE_SUPPORT/bin/as3project.rb\" -run"
+end tell</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>~d</string>
+	<key>name</key>
+	<string>Debug</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>9FC9B821-6157-46E2-B807-1083B45CA8A2</string>
+</dict>
+</plist>

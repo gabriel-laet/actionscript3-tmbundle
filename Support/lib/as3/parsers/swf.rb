@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# encoding: utf-8
 
 # Copied from the TextMate HTML Bundle and under the TextMate license which can
 # be found here http://svn.textmate.org/trunk/LICENSE
@@ -32,6 +33,7 @@ class Swf
 	attr_reader :bgcolor
 	attr_reader :zip
 	attr_reader :trace
+	attr_reader :sprites
   
 	def initialize(f)
 		@bits = ""
@@ -39,6 +41,8 @@ class Swf
 		@buffer = File.new(f,"r").read
 		@zip = ("" << @buffer.slice(0)) == "C"
 		@version = @buffer.slice(3).to_i
+		
+		@sprites = []
 		
 		#@trace = @buffer.slice(7)
 		
@@ -65,9 +69,8 @@ class Swf
 		
 		@bits = ""
 		
-		while(true)
-			tag = getNextTag()
-		
+		while(tag = getNextTag())
+			
 			# For an AS3 implementation:
 			# http://flashpanoramas.com/blog/2007/07/02/swf-parser-air-application/		
 			# There's also a C# version somewhere.
@@ -77,19 +80,15 @@ class Swf
 		  
 			if(tag[:id] == 9)
 				@bgcolor = sprintf("#%02X%02X%02X", tag[:data][0], tag[:data][1], tag[:data][2])
-				break
 			elsif(tag[:id] == 39)
 				# DefineSprite.
-				break
+        @sprites << tag
 			elsif(tag[:id] == 43)
 				# Frame Label, SWF 3 Only.
-				break
 			elsif(tag[:id] == 76)
 				# SymbolClass.
-				break
 			elsif(tag[:id] == 77)
 				# Metadata.
-				break
 			end
 		end
 		
@@ -99,6 +98,8 @@ class Swf
 
 	def getNextTag()
 		tag_and_size = @buffer.slice!(0..1).unpack("v")[0]
+		return nil if tag_and_size.nil?
+		
 		tag = {}
 		tag[:id] = tag_and_size >> 6
 		tag[:length] = tag_and_size & 0x3f
