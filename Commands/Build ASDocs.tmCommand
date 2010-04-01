@@ -5,23 +5,14 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string># grab the utility functions and checks from the bundle
-. "$TM_BUNDLE_SUPPORT/lib/flex_utils.sh"
-
-# the relevant support scripts
+	<string># the relevant support scripts
 BUILD="$TM_BUNDLE_SUPPORT/bin/as3project.rb"
-
-# Define $TM_PROJECT_DIR or warn the user if they're not working with a TM Project. 
-cd_to_tmproj_root
-
-# make sure we have the files + paths needed for compilation
-try_to_add_flex_bin_to_PATH
 
 "$BUILD" -docs</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
-	<string>@d</string>
+	<string>@k</string>
 	<key>name</key>
 	<string>Build ASDocs</string>
 	<key>output</key>
