@@ -14,7 +14,7 @@ build.rb</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
-	<string>@b</string>
+	<string>~@b</string>
 	<key>name</key>
 	<string>Build and Run</string>
 	<key>output</key>
