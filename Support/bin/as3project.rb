@@ -107,6 +107,10 @@ module AS3Project
         build_file.fetch("default")[0].fetch("open") rescue ""
     end
     
+    def self.default_run_app
+        build_file.fetch("default")[0].fetch("open_app") rescue ""
+    end
+    
     def self.mxmlc_applications
         apps = []
         
@@ -205,8 +209,17 @@ module AS3Project
     end 
     
     def self.run() 
+        open_command = "open"
+        if default_run_app != ""
+            open_command = "open -a '#{default_run_app}'"
+        end 
+        
         if default_run_file != ""
-            system("open #{File.join(@project, default_run_file)}")
+            if default_run_file.match(/^http/)
+              system("#{open_command} #{default_run_file}")
+            else
+              system("#{open_command} #{File.join(@project, default_run_file)}")
+            end
         end
     end
     
